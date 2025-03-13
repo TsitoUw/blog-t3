@@ -12,7 +12,7 @@ import {
 function Menu() {
   return (
     <div className="space-y-4 border-b p-4">
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
@@ -22,7 +22,7 @@ function Menu() {
         <Typography variant="h6" component="div">
           Tags
         </Typography>
-      </Box>
+      </Box> */}
       <Box
         sx={{
           display: "flex",

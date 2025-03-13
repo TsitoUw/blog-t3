@@ -6,11 +6,17 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { type Session } from "better-auth";
 
 import { db } from "@/server/db";
+
+type CreateContextOptions = {
+  session: Session | null;
+  headers: Headers;
+};
 
 /**
  * 1. CONTEXT
@@ -24,7 +30,7 @@ import { db } from "@/server/db";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+export const createTRPCContext = async (opts: CreateContextOptions) => {
   return {
     db,
     ...opts,
@@ -104,3 +110,20 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+const isAuthed = t.middleware(({ ctx, next }) => {
+  if (!ctx.session?.token) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session },
+    },
+  });
+});
+
+/**
+ * Protected procedure
+ **/
+export const protectedProcedure = t.procedure.use(isAuthed);
