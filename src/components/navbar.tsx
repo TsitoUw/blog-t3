@@ -66,7 +66,9 @@ export default async function NavBar() {
             <SignOut />
           </>
         ) : (
-          <Button color="inherit">Login</Button>
+          <Link href="/signin">
+            <Button color="inherit">Login</Button>
+          </Link>
         )}
       </Toolbar>
     </AppBar>
