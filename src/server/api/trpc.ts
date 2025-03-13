@@ -14,7 +14,7 @@ import { type Session } from "better-auth";
 import { db } from "@/server/db";
 
 type CreateContextOptions = {
-  session: Session | null;
+  session?: Session | null;
   headers: Headers;
 };
 
