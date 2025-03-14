@@ -4,3 +4,4 @@
 @tailwind components;
 @tailwind utilities;
 
+@plugin "@tailwindcss/typography";

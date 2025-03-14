@@ -12,7 +12,7 @@ export default async function Home() {
 
   // void api.post.getLatest.prefetch();
 
-  const articles = await api.article.getArticle();
+  const articles = await api.article.getArticles();
 
   return (
     <div className="container mx-auto grid grid-cols-12">

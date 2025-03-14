@@ -1,9 +1,11 @@
-import { Avatar, Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import type { Article } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 import dayjs from "dayjs";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import Link from "next/link";
+import UserAvatar from "../user/avatar";
 
 type SelectedUser = {
   author: { name: string; image: string | null };
@@ -21,30 +23,15 @@ type Props = {
   noDescription?: boolean;
 };
 
-const stringAvatar = (str: string) => {
-  if (!str) return "";
-
-  if (str.length < 2) return str[1];
-  const [first, second] = str.split(" ");
-
-  return first ?? "" + second ?? "";
-};
-
 function Article({ article, noImage, noDescription }: Props) {
   return (
-    <div className="border-b py-4">
+    <Link className="cursor-pointer border-b py-4" href={`/${article.slug}`}>
       <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-        {article.author.image ? (
-          <Avatar
-            alt={article.author.name}
-            src={article.author.image}
-            sx={{ borderRadius: "8px", width: 24, height: 24 }}
-          />
-        ) : (
-          <Avatar sx={{ borderRadius: "8px", width: 24, height: 24 }}>
-            {stringAvatar(article.author.name)}
-          </Avatar>
-        )}
+        <UserAvatar
+          name={article.author.name}
+          image={article.author.image}
+          size={24}
+        />
         <Typography variant="caption" component="p" sx={{ flexGrow: 1 }}>
           {article.author.name}
         </Typography>
@@ -115,7 +102,7 @@ function Article({ article, noImage, noDescription }: Props) {
           </Box>
         )}
       </div>
-    </div>
+    </Link>
   );
 }
 

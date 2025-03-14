@@ -9,6 +9,10 @@ export const writeFormSchema = z.object({
   html: z.string().min(100),
 });
 
+export const findBySlugSchema = z.object({
+  slug: z.string().min(1),
+});
+
 export const articleRouter = createTRPCRouter({
   createArticle: protectedProcedure
     .input(writeFormSchema)
@@ -33,7 +37,22 @@ export const articleRouter = createTRPCRouter({
         });
       },
     ),
-  getArticle: publicProcedure.query(async ({ ctx: { db } }) => {
+  getArticle: publicProcedure
+    .input(findBySlugSchema)
+    .query(async ({ ctx: { db }, input: { slug } }) => {
+      return await db.article.findFirst({
+        where: { slug: { equals: slug } },
+        include: {
+          author: {
+            select: {
+              name: true,
+              image: true,
+            },
+          },
+        },
+      });
+    }),
+  getArticles: publicProcedure.query(async ({ ctx: { db } }) => {
     return await db.article.findMany({
       select: {
         id: true,
