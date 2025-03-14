@@ -29,7 +29,7 @@ async function ArticlePage({ params }: Props) {
   if (!article) return notFound();
 
   return (
-    <main className="container mx-auto mb-4 max-w-5xl py-4">
+    <main className="container mx-auto mb-4 max-w-5xl py-4 px-4 lg:px-0">
       <Typography
         component="h1"
         variant="h4"

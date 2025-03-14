@@ -82,7 +82,7 @@ function Article({ article, noImage, noDescription }: Props) {
             </Box>
           </Box>
           {!noImage && (
-            <Box sx={{ ml: "56px" }}>
+            <Box className="hidden lg:block" sx={{ ml: "56px" }}>
               <Box
                 sx={{
                   width: "160px",
