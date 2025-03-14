@@ -7,7 +7,8 @@ import { notFound } from "next/navigation";
 import React from "react";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';import { Markup } from "interweave";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import { Markup } from "interweave";
 import { polyfill } from "interweave-ssr";
 import Image from "next/image";
 
@@ -58,13 +59,17 @@ async function ArticlePage({ params }: Props) {
         <Box className="flex flex-col justify-center gap-y-1">
           <Typography component="p">{article.author.name}</Typography>
           <Typography component="p" variant="caption">
-            {dayjs().from(article.createdAt)}
+            {dayjs(article.createdAt).fromNow()}
           </Typography>
         </Box>
       </Box>
       <Box className="my-4 flex items-center justify-between border-y py-2">
         <Box className="space-x-2">
-          <Button color="error" variant="outlined" className="flex items-center gap-1">
+          <Button
+            color="error"
+            variant="outlined"
+            className="flex items-center gap-1"
+          >
             <FavoriteBorderOutlinedIcon />
             <Typography component="p" variant="caption">
               99

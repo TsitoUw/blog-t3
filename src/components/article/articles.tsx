@@ -5,13 +5,16 @@ import Article from "./article";
 type Props = {
   articles: SelectedArticle[];
   small?: boolean;
+  emptyListText?: string;
 };
 
-function Articles({ articles, small }: Props) {
+function Articles({ articles, small, emptyListText }: Props) {
   return (
-    <div className={`py-4 space-y-4 ${!small && "lg:px-16"}`}>
+    <div className={`space-y-4 py-4 ${!small && "lg:px-16"}`}>
       {articles.length < 1 && (
-        <p className="text-center">Yay! You have seen it all.</p>
+        <p className={`text-center ${small && "text-sm"}`}>
+          {emptyListText ?? "Yay! You have seen it all."}
+        </p>
       )}
       {articles.map((article) => (
         <Article

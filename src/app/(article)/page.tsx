@@ -1,18 +1,20 @@
 import Articles from "@/components/article/articles";
 import Menu from "@/components/home/menu";
+import { auth } from "@/lib/auth";
 import { api } from "@/trpc/server";
 import { Typography } from "@mui/material";
+import { headers } from "next/headers";
 
 export default async function Home() {
-  // const session = await auth.api.getSession({
-  //   headers: await headers(),
-  // });
-
-  // void (await api.post.hello({ text: "from tRPC" }));
-
-  // void api.post.getLatest.prefetch();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   const articles = await api.article.getArticles();
+  // const data = session && (await api.article.getReadingList());
+
+  // // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  // const readingList = data ? data.map((d) => d.article) : [];
 
   return (
     <div className="container mx-auto grid grid-cols-12">
@@ -22,10 +24,13 @@ export default async function Home() {
       </main>
       <div className="col-span-4 hidden p-4 px-8 lg:block">
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Reading list
+          Reading List
         </Typography>
-        <Articles articles={articles} small />
-
+        <Articles
+          articles={[]}
+          small
+          emptyListText="Bookmarked articles will appear here."
+        />
       </div>
     </div>
   );

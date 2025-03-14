@@ -21,13 +21,15 @@ export const articleRouter = createTRPCRouter({
         ctx: { db, session },
         input: { description, html, title, text },
       }) => {
-        await db.article.create({
+        return await db.article.create({
           data: {
             title,
             description,
             text,
             html,
-            slug: slugify(title),
+            slug: slugify(title, {
+              remove: /[!@#$%^&*]/g,
+            }),
             author: {
               connect: {
                 id: session.userId,
@@ -37,6 +39,72 @@ export const articleRouter = createTRPCRouter({
         });
       },
     ),
+
+  bookmarkArticle: protectedProcedure
+    .input(z.object({ articleId: z.string().min(1) }))
+    .mutation(
+      async ({
+        ctx: {
+          db,
+          session: { userId },
+        },
+        input: { articleId },
+      }) => {
+        return await db.bookmark.create({
+          data: {
+            userId,
+            articleId,
+          },
+        });
+      },
+    ),
+  removeArticleBookmark: protectedProcedure
+    .input(z.object({ articleId: z.string().min(1) }))
+    .mutation(
+      async ({
+        ctx: {
+          db,
+          session: { userId },
+        },
+        input: { articleId },
+      }) => {
+        return await db.bookmark.delete({
+          where: {
+            userId_articleId: {
+              userId,
+              articleId,
+            },
+          },
+        });
+      },
+    ),
+  getReadingList: protectedProcedure.query(
+    async ({
+      ctx: {
+        db,
+        session: { userId },
+      },
+    }) => {
+      return await db.bookmark.findMany({
+        where: {
+          userId,
+        },
+        take: 4,
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          article: {
+            include: {
+              author: {
+                select: { name: true, image: true },
+              },
+            },
+          },
+        },
+      });
+    },
+  ),
   getArticle: publicProcedure
     .input(findBySlugSchema)
     .query(async ({ ctx: { db }, input: { slug } }) => {

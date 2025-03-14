@@ -51,7 +51,6 @@ function SignupForm() {
     const data = await authClient.signIn.social({
       provider: "google",
     });
-    console.log(data);
   }
 
   async function signup({ email, name, password }: FormData) {
@@ -76,7 +75,6 @@ function SignupForm() {
         },
       },
     );
-    console.log({ data, error });
   }
 
   return (
@@ -97,7 +95,7 @@ function SignupForm() {
         noValidate
         sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}
       >
-        <FormControl>
+        <FormControl required>
           <FormLabel htmlFor="name">Name</FormLabel>
           <TextField
             error={!!errors.name}
@@ -114,7 +112,7 @@ function SignupForm() {
             {...register("name")}
           />
         </FormControl>
-        <FormControl>
+        <FormControl required>
           <FormLabel htmlFor="email">Email</FormLabel>
           <TextField
             error={!!errors.email}
@@ -131,7 +129,7 @@ function SignupForm() {
             {...register("email")}
           />
         </FormControl>
-        <FormControl>
+        <FormControl required>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <FormLabel htmlFor="password">Password</FormLabel>
             <Link

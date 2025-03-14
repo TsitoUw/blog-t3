@@ -4,13 +4,19 @@ import { type NextRequest } from "next/server";
 import { env } from "@/env";
 import { appRouter } from "@/server/api/root";
 import { createTRPCContext } from "@/server/api/trpc";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
  * handling a HTTP request (e.g. when you make requests from Client Components).
  */
 const createContext = async (req: NextRequest) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   return createTRPCContext({
+    session: session?.session,
     headers: req.headers,
   });
 };
@@ -25,7 +31,7 @@ const handler = (req: NextRequest) =>
       env.NODE_ENV === "development"
         ? ({ path, error }) => {
             console.error(
-              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
+              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
             );
           }
         : undefined,

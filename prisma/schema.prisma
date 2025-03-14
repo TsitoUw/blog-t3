@@ -23,15 +23,31 @@ model Article {
   authorId String
   author   User   @relation(fields: [authorId], references: [id])
 
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Bookmark  Bookmark[]
+
+  @@index([authorId])
+  @@map("article")
+}
+
+model Bookmark {
+  id String @id @default(cuid())
+
+  userId    String
+  articleId String
+
+  user      User     @relation(fields: [userId], references: [id])
+  article   Article  @relation(fields: [articleId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([authorId])
-  @@map("post")
+  @@unique([userId, articleId])
+  @@index([articleId])
 }
 
 model User {
-  id            String    @id
+  id            String     @id
   name          String
   email         String
   emailVerified Boolean
@@ -41,6 +57,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   articles      Article[]
+  bookmarks     Bookmark[]
 
   @@unique([email])
   @@map("user")

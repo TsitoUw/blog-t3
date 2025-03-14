@@ -14,6 +14,7 @@ import theme from "@/theme";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/navbar";
 import { HydrateClient } from "@/trpc/server";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +51,7 @@ export default function RootLayout({
               <HydrateClient>
                 <Navbar />
                 {children}
+                <Toaster />
               </HydrateClient>
             </ThemeProvider>
           </AppRouterCacheProvider>

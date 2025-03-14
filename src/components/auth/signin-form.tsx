@@ -48,7 +48,6 @@ function SignInForm() {
       provider: "google",
       callbackURL: "/",
     });
-    console.log(data);
   }
 
   async function signIn({ email, password }: FormData) {
@@ -95,7 +94,7 @@ function SignInForm() {
         noValidate
         sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}
       >
-        <FormControl>
+        <FormControl required>
           <FormLabel htmlFor="email">Email</FormLabel>
           <TextField
             error={!!errors.email}
@@ -112,7 +111,7 @@ function SignInForm() {
             {...register("email")}
           />
         </FormControl>
-        <FormControl>
+        <FormControl required>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <FormLabel htmlFor="password">Password</FormLabel>
             <Link
