@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,6 +31,7 @@ type FormData = z.infer<typeof schema>;
 
 function SignupForm() {
   const [isPending, setIsPending] = useState(false);
+  const [googlePending, startGoogleTransition] = useTransition();
 
   const {
     register,
@@ -45,6 +46,13 @@ function SignupForm() {
       password: "",
     },
   });
+
+  async function googleSignIn() {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+    console.log(data);
+  }
 
   async function signup({ email, name, password }: FormData) {
     if (isPending) return;
@@ -159,7 +167,7 @@ function SignupForm() {
           type="submit"
           fullWidth
           variant="contained"
-          disabled={isPending}
+          disabled={googlePending || isPending}
         >
           Sign up
         </Button>
@@ -177,7 +185,8 @@ function SignupForm() {
         <Button
           fullWidth
           variant="outlined"
-          onClick={() => alert("Sign in with Google")}
+          disabled={googlePending || isPending}
+          onClick={() => startGoogleTransition(googleSignIn)}
           startIcon={<GoogleIcon />}
         >
           Sign up with Google
