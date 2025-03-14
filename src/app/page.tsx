@@ -13,11 +13,11 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto grid grid-cols-12">
-      <main className="col-span-8 min-h-[calc(100vh-64px-2px)] border-r p-4">
+      <main className="col-span-12 min-h-[calc(100vh-64px-2px)] p-4 lg:col-span-8 lg:border-r">
         <Menu />
         <Articles />
       </main>
-      <div className="col-span-4 p-4">
+      <div className="col-span-4 hidden p-4 lg:block">
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Reading list
         </Typography>

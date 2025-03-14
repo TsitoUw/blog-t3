@@ -35,7 +35,7 @@ export default async function NavBar() {
         <Typography variant="h6" component="div" sx={{ mr: 4 }}>
           The awesome blog
         </Typography>
-        <FormControl>
+        <FormControl sx={{ display: { xs: "none", md: "block" } }}>
           <Input
             id="text"
             type="search"

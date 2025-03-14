@@ -3,7 +3,7 @@ import SignInForm from "../../components/auth/signin-form";
 
 function SigninPage() {
   return (
-    <div className="flex min-h-screen w-full items-center justify-center">
+    <div className="mt-8 flex w-full justify-center lg:mt-0 lg:min-h-screen lg:items-center">
       <SignInForm />
     </div>
   );

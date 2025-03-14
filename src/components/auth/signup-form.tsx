@@ -72,7 +72,10 @@ function SignupForm() {
   }
 
   return (
-    <Card variant="outlined" sx={{ padding: "1rem", minWidth: 376 }}>
+    <Card
+      variant="outlined"
+      sx={{ padding: "1rem", minWidth: 476, width: { xs: "90%", md: 476 } }}
+    >
       <Typography
         component="h1"
         variant="h4"

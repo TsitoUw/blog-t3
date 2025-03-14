@@ -3,8 +3,8 @@ import SignupForm from "../../components/auth/signup-form";
 
 function SignupPage() {
   return (
-    <div className="w-full min-h-screen flex items-center justify-center">
-        <SignupForm />
+    <div className="mt-8 flex w-full justify-center lg:mt-0 lg:min-h-screen lg:items-center">
+      <SignupForm />
     </div>
   );
 }

@@ -6,7 +6,7 @@ const protectedRoutes = ["/write"];
 const reverseProtectedRoutes = ["/signin", "/signup"];
 
 export default async function middleware(req: NextRequest) {
-  // 2. Check if the current route is protected or public
+  // Check if the current route is protected or public
   const path = req.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.includes(path);
   const isReverseProtectedRoute = reverseProtectedRoutes.includes(path);
@@ -17,10 +17,12 @@ export default async function middleware(req: NextRequest) {
     cookiePrefix: "better-auth",
   });
 
+  // redirect to home if accessing route while been authenticated
   if (isReverseProtectedRoute && !!sessionCookie) {
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 
+  // redirect to sign in if accession route while not been authenticated
   if (isProtectedRoute && !sessionCookie) {
     return NextResponse.redirect(new URL("/signin", req.nextUrl));
   }

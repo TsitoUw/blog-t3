@@ -21,7 +21,7 @@ import { authClient } from "@/lib/auth-client";
 
 const schema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is required"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  password: z.string().min(1, "Password is required"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -69,7 +69,10 @@ function SignInForm() {
   }
 
   return (
-    <Card variant="outlined" sx={{ padding: "1rem", minWidth: 376 }}>
+    <Card
+      variant="outlined"
+      sx={{ padding: "1rem", minWidth: 476, width: { xs: "90%", md: 476 } }}
+    >
       <Typography
         component="h1"
         variant="h4"
