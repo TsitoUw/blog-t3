@@ -30,6 +30,7 @@ async function main() {
     const articleArr = Array.from({
       length: faker.number.int({ min: 5, max: 20 }),
     });
+    print("\n");
     print(`Creating ${articleArr.length} articles`);
     for (const _ of articleArr) {
       await prisma.article.create({

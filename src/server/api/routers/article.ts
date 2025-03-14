@@ -34,6 +34,24 @@ export const articleRouter = createTRPCRouter({
       },
     ),
   getArticle: publicProcedure.query(async ({ ctx: { db } }) => {
-    return await db.article.findMany({ orderBy: { createdAt: "desc" } });
+    return await db.article.findMany({
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        description: true,
+        createdAt: true,
+        featuredImage: true,
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
+      // TODO: change later, just for mocking the home page
+      take: 20,
+      orderBy: { createdAt: "desc" },
+    });
   }),
 });
