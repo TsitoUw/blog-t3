@@ -89,7 +89,7 @@ export const articleRouter = createTRPCRouter({
         where: {
           userId,
         },
-        take: 4,
+        take: 5,
         orderBy: {
           createdAt: "desc",
         },

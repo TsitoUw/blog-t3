@@ -79,7 +79,7 @@ function SignInForm() {
   return (
     <Card
       variant="outlined"
-      sx={{ padding: "1rem", minWidth: 476, width: { xs: "90%", md: 476 } }}
+      sx={{ padding: "1rem", minWidth: 365, width: { xs: "90%", md: 476 } }}
     >
       <Typography
         component="h1"

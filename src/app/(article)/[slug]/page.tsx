@@ -104,7 +104,7 @@ async function ArticlePage({ params }: Props) {
           </Typography>
         </Box>
 
-        <Box className="prose">
+        <Box className="prose space-y-1">
           <Markup content={article.html ?? article.text} />
         </Box>
       </Box>

@@ -10,8 +10,16 @@ export default async function Home() {
     headers: await headers(),
   });
 
+  console.log({ session });
+
   const articles = await api.article.getArticles();
-  // const data = session && (await api.article.getReadingList());
+
+  try {
+    const data = session && (await api.article.getReadingList());
+    console.log({ data });
+  } catch (error) {
+    console.error(error);
+  }
 
   // // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   // const readingList = data ? data.map((d) => d.article) : [];

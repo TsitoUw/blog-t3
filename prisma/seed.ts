@@ -8,7 +8,7 @@ function print(...args: any[]) {
 
 const prisma = new PrismaClient();
 async function main() {
-  const USER_LENGTH = 50;
+  const USER_LENGTH = 10;
 
   const arr = Array.from({ length: USER_LENGTH }).map((_, i) => i);
   console.log("⚒️ Seeding the db");
@@ -28,7 +28,7 @@ async function main() {
     });
 
     const articleArr = Array.from({
-      length: faker.number.int({ min: 5, max: 20 }),
+      length: faker.number.int({ min: 1, max: 10 }),
     });
     print("\n");
     print(`Creating ${articleArr.length} articles`);

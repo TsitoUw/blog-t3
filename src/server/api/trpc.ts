@@ -31,6 +31,7 @@ type CreateContextOptions = {
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: CreateContextOptions) => {
+  console.log({ opts });
   return {
     db,
     ...opts,
@@ -112,7 +113,7 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 export const publicProcedure = t.procedure.use(timingMiddleware);
 
 const isAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.token) {
+  if (!ctx.session) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
