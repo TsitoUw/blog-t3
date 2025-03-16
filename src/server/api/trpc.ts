@@ -31,7 +31,6 @@ type CreateContextOptions = {
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: CreateContextOptions) => {
-  console.log({ opts });
   return {
     db,
     ...opts,

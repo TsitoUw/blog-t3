@@ -8,13 +8,15 @@ function print(...args: any[]) {
 
 const prisma = new PrismaClient();
 async function main() {
-  const USER_LENGTH = 10;
+  const USER_COUNT = 10;
+  const MIN_ARTICLE_COUNT = 1;
+  const MAX_ARTICLE_COUNT = 1;
 
-  const arr = Array.from({ length: USER_LENGTH }).map((_, i) => i);
+  const arr = Array.from({ length: USER_COUNT }).map((_, i) => i);
   console.log("⚒️ Seeding the db");
 
   for (const i of arr) {
-    print(`${i + 1}/${USER_LENGTH}`);
+    print(`${i + 1}/${USER_COUNT}`);
     const user = await prisma.user.create({
       data: {
         id: faker.string.uuid(),
@@ -28,7 +30,10 @@ async function main() {
     });
 
     const articleArr = Array.from({
-      length: faker.number.int({ min: 1, max: 10 }),
+      length: faker.number.int({
+        min: MIN_ARTICLE_COUNT,
+        max: MAX_ARTICLE_COUNT,
+      }),
     });
     print("\n");
     print(`Creating ${articleArr.length} articles`);

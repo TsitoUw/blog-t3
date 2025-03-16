@@ -99,6 +99,11 @@ export const articleRouter = createTRPCRouter({
               author: {
                 select: { name: true, image: true },
               },
+              bookmark: {
+                where: {
+                  userId: userId,
+                },
+              },
             },
           },
         },
@@ -107,7 +112,7 @@ export const articleRouter = createTRPCRouter({
   ),
   getArticle: publicProcedure
     .input(findBySlugSchema)
-    .query(async ({ ctx: { db }, input: { slug } }) => {
+    .query(async ({ ctx: { db, session }, input: { slug } }) => {
       return await db.article.findFirst({
         where: { slug: { equals: slug } },
         include: {
@@ -117,10 +122,17 @@ export const articleRouter = createTRPCRouter({
               image: true,
             },
           },
+          bookmark: session?.userId
+            ? {
+                where: {
+                  userId: session.userId,
+                },
+              }
+            : false,
         },
       });
     }),
-  getArticles: publicProcedure.query(async ({ ctx: { db } }) => {
+  getArticles: publicProcedure.query(async ({ ctx: { db, session } }) => {
     return await db.article.findMany({
       select: {
         id: true,
@@ -135,7 +147,15 @@ export const articleRouter = createTRPCRouter({
             image: true,
           },
         },
+        bookmark: session?.userId
+          ? {
+              where: {
+                userId: session.userId,
+              },
+            }
+          : false,
       },
+
       // TODO: change later, just for mocking the home page
       take: 20,
       orderBy: { createdAt: "desc" },

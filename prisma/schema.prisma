@@ -26,7 +26,7 @@ model Article {
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  Bookmark  Bookmark[]
+  bookmark  Bookmark[]
 
   @@index([authorId])
   @@map("article")

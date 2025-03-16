@@ -1,16 +1,16 @@
 import UserAvatar from "@/components/user/avatar";
 import { api } from "@/trpc/server";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { notFound } from "next/navigation";
 import React from "react";
-import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import { Markup } from "interweave";
 import { polyfill } from "interweave-ssr";
 import Image from "next/image";
+import BookmarkButton from "@/components/article/bookmark-button";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -29,7 +29,7 @@ async function ArticlePage({ params }: Props) {
   if (!article) return notFound();
 
   return (
-    <main className="container mx-auto mb-4 max-w-5xl py-4 px-4 lg:px-0">
+    <main className="container mx-auto mb-4 max-w-5xl px-4 py-4 lg:px-0">
       <Typography
         component="h1"
         variant="h4"
@@ -82,9 +82,10 @@ async function ArticlePage({ params }: Props) {
             </Typography>
           </Button>
         </Box>
-        <IconButton>
-          <BookmarkAddOutlinedIcon />
-        </IconButton>
+        <BookmarkButton
+          articleId={article.id}
+          bookmarked={!!article.bookmark.length}
+        />
       </Box>
       <Box className="content | my-4 space-y-6">
         {article.featuredImage && (
