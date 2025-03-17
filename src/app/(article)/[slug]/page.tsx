@@ -84,7 +84,7 @@ async function ArticlePage({ params }: Props) {
         </Box>
         <BookmarkButton
           articleId={article.id}
-          bookmarked={!!article.bookmark.length}
+          bookmarked={!!article?.bookmark?.length}
         />
       </Box>
       <Box className="content | my-4 space-y-6">

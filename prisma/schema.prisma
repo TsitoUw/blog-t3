@@ -45,6 +45,7 @@ model Bookmark {
 
   @@unique([userId, articleId])
   @@index([articleId])
+  @@map("bookmark")
 }
 
 model User {

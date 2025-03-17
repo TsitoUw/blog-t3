@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 async function main() {
   const USER_COUNT = 10;
   const MIN_ARTICLE_COUNT = 1;
-  const MAX_ARTICLE_COUNT = 1;
+  const MAX_ARTICLE_COUNT = 2;
 
   const arr = Array.from({ length: USER_COUNT }).map((_, i) => i);
   console.log("⚒️ Seeding the db");

@@ -5,6 +5,8 @@ import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import { IconButton } from "@mui/material";
 import { api } from "@/trpc/react";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 type Props = {
   articleId: string;
@@ -12,6 +14,7 @@ type Props = {
 };
 
 function BookmarkButton({ articleId, bookmarked }: Props) {
+  const { data: session } = authClient.useSession();
   const postRoute = api.useUtils().article;
   const utils = api.useUtils();
   const [isBookmarked, setIsBookmarked] = useState(bookmarked);
@@ -38,6 +41,10 @@ function BookmarkButton({ articleId, bookmarked }: Props) {
   });
 
   async function toggleBookmark() {
+    if(!session){
+      toast.info("Please sign in to save this article to your bookmarks.")
+      return;
+    }
     try {
       if (!isBookmarked) {
         await bookmarkPost.mutateAsync({
