@@ -27,7 +27,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "The awesome blog",
+  title: "The blog",
   description: "Read, Think, Write.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

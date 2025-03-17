@@ -32,8 +32,12 @@ export default async function NavBar() {
           </IconButton>
         </Link>
 
-        <Typography variant="h6" component="div" sx={{ mr: 4 }}>
-          The awesome blog
+        <Typography
+          variant="h6"
+          component="h6"
+          sx={{ mr: 4, fontSize: { xs: "1.2rem", md: "1.4rem" } }}
+        >
+          The blog
         </Typography>
         <FormControl sx={{ display: { xs: "none", md: "block" } }}>
           <Input
